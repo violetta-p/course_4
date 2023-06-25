@@ -29,7 +29,8 @@ class PreparedData:
             vac_info = {
                 "profession": name, "url": vacancy_url, "city": area,
                 "company": company_name, "schedule": working_time,
-                "experience": work_experience, "salary": salary
+                "experience": work_experience, "salary_min": salary[0],
+                "salary_max": salary[1],
             }
             PreparedData.all_data.append(vac_info)
 
@@ -50,7 +51,8 @@ class PreparedData:
             vac_info = {
                 "profession": name, "url": vacancy_url, "city": area,
                 "company": company_name, "schedule": working_time,
-                "experience": work_experience, "salary": salary
+                "experience": work_experience, "salary_min": salary[0],
+                "salary_max": salary[1],
             }
             PreparedData.all_data.append(vac_info)
 
@@ -58,4 +60,10 @@ class PreparedData:
     def convert_salary_from_str_to_int(s_min, s_max):
         salary_min = 0 if type(s_min) == "NoneType" or s_min in PreparedData.items else int(s_min)
         salary_max = 0 if type(s_max) == "NoneType" or s_max in PreparedData.items else int(s_max)
+
+        if salary_min != 0 and salary_max == 0:
+            salary_max = salary_min
+        elif salary_min == 0 and salary_max != 0:
+            salary_min = salary_max
+
         return [salary_min, salary_max]

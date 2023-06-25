@@ -9,7 +9,8 @@ class Vacancy:
     def __init__(self, **data):
         self.profession: str = data.get('profession')
         self.area: str = data.get('city')
-        self.salary: list = data.get('salary')
+        self.salary_min: int = data.get('salary_min')
+        self.salary_max: int = data.get('salary_max')
         self.url: str = data.get('url')
         self.experience: str = data.get('experience')
         self.schedule: str = data.get('schedule')
@@ -19,7 +20,8 @@ class Vacancy:
         data = {
                 "profession": self.profession, "url": self.url, "city": self.area,
                 "company": self.company_name, "schedule": self.schedule,
-                "experience": self.experience, "salary": self.salary
+                "experience": self.experience, "salary_min": self.salary_min,
+                "salary_max": self.salary_max,
             }
         Vacancy.all_vacancies.append(data)
 
@@ -62,8 +64,8 @@ class Filters:
         else:
             return False
 
-    def check_salary(self, data):
-        if data[0] >= self.salary[0]:
+    def check_salary(self, data: int):
+        if data >= self.salary[0]:
             return True
         else:
             return False
