@@ -48,21 +48,32 @@ def main_part():
                 if filt.check_experience(vacancy.experience) and \
                         filt.check_area(vacancy.area) and \
                         filt.check_name(vacancy.profession) and \
-                        filt.check_salary(vacancy.salary):
+                        filt.check_salary(vacancy.salary_min):
                     vacancy.append_data()
             if len(Vacancy.all_vacancies) == 0:
                 print("Нет вакансий, соответствующих заданным критериям")
             else:
                 filtered_vacancies = Vacancy.all_vacancies
-                print(filtered_vacancies)
-                SaveToJSON(filtered_vacancies).save_data()
-                SaveToExcel(filtered_vacancies, keyword).save_data()
-                print("Вакансии сохранены в файл 'src/results.xlsx' ")
+                save_json = SaveToJSON(filtered_vacancies)
+                save_excel = SaveToExcel(filtered_vacancies, keyword)
+                user_answer = input("Очистить файл перед сохранением? (yes/no) ")
+                if user_answer.lower() == "yes":
+                    save_json.delete_data()
+                    save_excel.delete_data()
+                save_json.save_data()
+                save_excel.save_data()
+                print(f"Вакансии сохранены в файл 'src/results.xlsx'. Лист: {keyword}")
             ask_about_filters = input("Начать поиск по другим фильтрам?(yes/no): ")
     else:
-        SaveToJSON(vacancies_data).save_data()
-        SaveToExcel(vacancies_data, keyword).save_data()
-        print("Вакансии сохранены в файл 'src/results.xlsx' ")
+        save_json = SaveToJSON(vacancies_data)
+        save_excel = SaveToExcel(vacancies_data, keyword)
+        user_answer = input("Очистить файл перед сохранением? (yes/no) ")
+        if user_answer.lower() == "yes":
+            save_json.delete_data()
+            save_excel.delete_data()
+        save_json.save_data()
+        save_excel.save_data()
+        print(f"Вакансии сохранены в файл 'src/results.xlsx'. Лист: {keyword}")
 
 
 if __name__ == "__main__":

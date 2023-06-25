@@ -1,5 +1,6 @@
 import json
 import os
+import openpyxl
 import pandas as pd
 from pathlib import Path
 
@@ -16,6 +17,10 @@ class SaveToJSON:
 
     def __init__(self, data):
         self.data = data
+        self.full_path_to_data = os.path.join(FILE_PATH, FILE_NAME)
+
+    def delete_data(self):
+        open(self.full_path_to_data, "w").close()
 
     def save_data(self):
         sorted_data = self.sort_filtered_data()
@@ -26,7 +31,7 @@ class SaveToJSON:
     def sort_filtered_data(self) -> list:
         if len(self.data) <= 1:
             return self.data
-        return sorted(self.data, key=lambda v: v['salary'][0], reverse=True)
+        return sorted(self.data, key=lambda v: v['salary_min'], reverse=True)
 
 
 class SaveToExcel(SaveToJSON):
@@ -36,19 +41,29 @@ class SaveToExcel(SaveToJSON):
     def __init__(self, data, keyword):
         super().__init__(data)
         self.keyword = keyword
+        self.full_path_to_data = os.path.join(FILE_PATH, EXCEL_FILE_NAME)
+
+    def get_sheets_names(self):
+        # Получает список названий страниц в Excel
+        xl = pd.ExcelFile(self.full_path_to_data)
+        return list(xl.sheet_names)
+
+    def delete_data(self):
+        sheet_list = self.get_sheets_names()
+        if self.keyword in sheet_list:
+            wb = openpyxl.load_workbook(filename=EXCEL_FILE_NAME)
+            wb.remove(wb[self.keyword])
+            wb.save(EXCEL_FILE_NAME)
 
     def save_data(self):
-        sheet_list = []
         sorted_data = self.sort_filtered_data()
-        full_path_to_data = os.path.join(FILE_PATH, EXCEL_FILE_NAME)
         df = pd.DataFrame(sorted_data)
-        # Получает список названий страниц в Excel
-        xl = pd.ExcelFile(full_path_to_data)
-        sheet_list = list(xl.sheet_names)
+        sheet_list = self.get_sheets_names()
 
         if self.keyword not in sheet_list:
-            with pd.ExcelWriter(full_path_to_data, mode='a', engine="openpyxl") as writer:
+            with pd.ExcelWriter(self.full_path_to_data, mode='a', engine="openpyxl") as writer:
                 df.to_excel(writer, sheet_name=self.keyword, index=False)
         else:
-            with pd.ExcelWriter(full_path_to_data, mode='a', engine="openpyxl", if_sheet_exists="overlay") as writer:
-                df.to_excel(writer, sheet_name=self.keyword, startrow=writer.sheets[self.keyword].max_row, index=False, header=False)
+            with pd.ExcelWriter(self.full_path_to_data, mode='a', engine="openpyxl", if_sheet_exists="overlay") as writer:
+                df.to_excel(writer, sheet_name=self.keyword, startrow=writer.sheets[self.keyword].max_row,
+                            index=False, header=False)
