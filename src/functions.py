@@ -12,7 +12,8 @@ class PreparedData:
         self.sj_data = sj_data
 
     def get_prepared_data_hh(self):
-
+        if self.hh_data is None:
+            return None
         vacancies = self.hh_data.get("items", [])
         for vacancy in vacancies:
             area = vacancy.get("area", {}).get("name")
@@ -33,6 +34,8 @@ class PreparedData:
             PreparedData.all_data.append(vac_info)
 
     def get_prepared_data_sj(self):
+        if self.sj_data is None:
+            return None
         vacancies = self.sj_data.get("objects", [])
         for vacancy in vacancies:
             area = vacancy.get("town", {}).get("title")

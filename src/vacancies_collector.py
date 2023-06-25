@@ -20,11 +20,17 @@ class HeadHunterAPI(JobSitesAPI):
             'page': 0,  # Индекс страницы поиска на HH
             'per_page': 2  # Кол-во вакансий на 1 странице
         }
-
-        response = requests.get('https://api.hh.ru/vacancies', params=params)
-        if response.status_code == 200:
-            data = response.json()
-            return data
+        try:
+            response = requests.get('https://api.hh.ru/vacancies', params=params)
+            if response.status_code == 200:
+                data = response.json()
+                return data
+            else:
+                print(f'HeadHunter response: Error {response.status_code}')
+                return None
+        except (requests.exceptions.HTTPError, requests.ConnectionError):
+            print('HeadHunter response: Connection failed')
+            return None
 
 
 class SuperJobAPI(JobSitesAPI):
@@ -40,13 +46,14 @@ class SuperJobAPI(JobSitesAPI):
             "count": 2
         }
         try:
-            page_response = requests.get(
-                "https://api.superjob.ru/2.0/vacancies/",
-                headers=headers,
-                params=params,
-            )
-            data = page_response.json()
-            return data
-
-        except requests.exceptions.HTTPError:
-            print("Error")
+            response = requests.get("https://api.superjob.ru/2.0/vacancies/",
+                                    headers=headers, params=params,)
+            if response.status_code == 200:
+                data = response.json()
+                return data
+            else:
+                print(f'SuperJob response: Error {response.status_code}')
+                return None
+        except (requests.exceptions.HTTPError, requests.ConnectionError):
+            print('SuperJob response: Connection failed')
+            return None
