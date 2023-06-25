@@ -5,6 +5,17 @@ from src.vacancy import Vacancy
 from src.save_data import SaveToJSON, SaveToExcel
 
 
+def get_data(keyword: str):
+    hh_api = HeadHunterAPI(keyword)
+    sj_api = SuperJobAPI(keyword)
+    hh_vacancies = hh_api.get_vacancies()
+    sj_vacancies = sj_api.get_vacancies()
+    data_prep = PreparedData(hh_vacancies, sj_vacancies)
+    data_prep.get_prepared_data_hh()
+    data_prep.get_prepared_data_sj()
+    return PreparedData.all_data
+
+
 def set_filters():
     """
     Функция, взаимодействующая с пользователем.
@@ -26,16 +37,7 @@ def main_part():
     """
     # platforms = ["HeadHunter", "SuperJob"]
     keyword = input("Введите поисковый запрос: ")
-
-    hh_api = HeadHunterAPI(keyword)
-    sj_api = SuperJobAPI(keyword)
-    hh_vacancies = hh_api.get_vacancies()
-    sj_vacancies = sj_api.get_vacancies()
-    data_prep = PreparedData(hh_vacancies, sj_vacancies)
-    data_prep.get_prepared_data_hh()
-    data_prep.get_prepared_data_sj()
-
-    vacancies_data = PreparedData.all_data
+    vacancies_data = get_data(keyword)
 
     ask_about_filters = input("Установить фильтры?(yes/no): ")
     if ask_about_filters.lower() == "yes":
