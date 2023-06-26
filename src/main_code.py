@@ -1,3 +1,4 @@
+from json import JSONDecodeError
 from src.vacancies_collector import HeadHunterAPI, SuperJobAPI
 from src.functions import PreparedData
 from src.vacancy import Filters
@@ -6,6 +7,16 @@ from src.save_data import SaveToJSON, SaveToExcel
 
 
 def get_data(keyword: str):
+    """
+    Получение данных по ключевому слову с различных ресурсов
+    и приведение их к единому формату:
+
+    {  "profession": '', "url": '', "city": '',
+       "company": '', "schedule": '',
+       "experience": '', "salary_min": '',
+       "salary_max": ''}
+
+    """
     hh_api = HeadHunterAPI(keyword)
     sj_api = SuperJobAPI(keyword)
     hh_vacancies = hh_api.get_vacancies()
@@ -22,13 +33,32 @@ def set_filters():
     Получает данные, по которым будет осуществлена фильтрация.
     :return: Объект класса Filters
     """
-    print("Укажите фильтр или нажмите Enter")
+    print(f"\nУкажите фильтр или нажмите Enter\n")
     name_filter = input("Уточняющие слова для названия профессии: ")
     area_filter = input("Город: ")
-    salary = (input("Желаемая зарплата(): ")).split('-')
+    salary = (input("Желаемая зарплата(Примеры ввода: 1000 или 1000-5000): ")).split('-')
     salary_filter = [0, 0] if salary == [''] else [int(i) for i in salary]
     experience_filter = input("Поиск вакансий без требований к опыту работы?(yes): ")
     return Filters(name_filter, area_filter, salary_filter, experience_filter)
+
+
+def save_data(user_answer, json_data, excel_data):
+    """
+    Функция сохраняет данные в пустой файл или дописывает их
+    в существующий в зависимости от ответа пользователя.
+    """
+
+    if user_answer.lower() == "yes":
+        json_data.save_data()
+    else:
+        try:
+            json_data.append_data()
+        except JSONDecodeError:
+            json_data.save_data()
+
+    json_data.make_final_file()
+    all_sorted_data = json_data.all_filtered_data
+    excel_data.save_filtered_data(all_sorted_data)
 
 
 def main_part():
@@ -55,25 +85,17 @@ def main_part():
             else:
                 filtered_vacancies = Vacancy.all_vacancies
                 save_json = SaveToJSON(filtered_vacancies)
-                save_excel = SaveToExcel(filtered_vacancies, keyword)
-                user_answer = input("Очистить файл перед сохранением? (yes/no) ")
-                if user_answer.lower() == "yes":
-                    save_json.delete_data()
-                    save_excel.delete_data()
-                save_json.save_data()
-                save_excel.save_data()
-                print(f"Вакансии сохранены в файл 'src/results.xlsx'. Лист: {keyword}")
-            ask_about_filters = input("Начать поиск по другим фильтрам?(yes/no): ")
+                save_excel = SaveToExcel(filtered_vacancies)
+                user_answer = input(f"\nОчистить файл перед сохранением? (yes/no) ")
+                save_data(user_answer, save_json, save_excel)
+                print(f"\n{str(save_json)}\n{str(save_excel)}")
+            ask_about_filters = input(f"\nНачать поиск по другим фильтрам?(yes/no): ")
     else:
         save_json = SaveToJSON(vacancies_data)
-        save_excel = SaveToExcel(vacancies_data, keyword)
-        user_answer = input("Очистить файл перед сохранением? (yes/no) ")
-        if user_answer.lower() == "yes":
-            save_json.delete_data()
-            save_excel.delete_data()
-        save_json.save_data()
-        save_excel.save_data()
-        print(f"Вакансии сохранены в файл 'src/results.xlsx'. Лист: {keyword}")
+        save_excel = SaveToExcel(vacancies_data)
+        user_answer = input(f"\nОчистить файл перед сохранением? (yes/no) ")
+        save_data(user_answer, save_json, save_excel)
+        print(f"\n{str(save_json)}\n{str(save_excel)}")
 
 
 if __name__ == "__main__":
