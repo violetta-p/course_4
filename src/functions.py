@@ -14,7 +14,7 @@ class PreparedData:
     def get_prepared_data_hh(self):
         if self.hh_data is None:
             return None
-        vacancies = self.hh_data.get("items", [])
+        vacancies = self.hh_data
         for vacancy in vacancies:
             area = vacancy.get("area", {}).get("name")
             salary_min = 0 if vacancy.get("salary", {}) in PreparedData.items or type(vacancy.get("salary", {})) == 'NoneType' else vacancy["salary"]["from"]
@@ -37,7 +37,7 @@ class PreparedData:
     def get_prepared_data_sj(self):
         if self.sj_data is None:
             return None
-        vacancies = self.sj_data.get("objects", [])
+        vacancies = self.sj_data
         for vacancy in vacancies:
             area = vacancy.get("town", {}).get("title")
             salary_min = 0 if vacancy.get("payment_from", {}) in PreparedData.items or type(vacancy.get("payment_from")) == 'NoneType' else vacancy["payment_from"]
