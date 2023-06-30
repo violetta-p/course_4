@@ -1,0 +1,132 @@
+[
+        {
+                "profession": "Junior Аналитик",
+                "url": "https://hh.ru/vacancy/81595610",
+                "city": "Москва",
+                "company": "Доценко Дарья",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 120000,
+                "salary_max": 120000
+        },
+        {
+                "profession": "Junior Data scientist (Аналитик)",
+                "url": "https://hh.ru/vacancy/81862798",
+                "city": "Нижний Новгород",
+                "company": "Займиго МФК",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 60000,
+                "salary_max": 60000
+        },
+        {
+                "profession": "Junior Python Developer",
+                "url": "https://hh.ru/vacancy/81667130",
+                "city": "Москва",
+                "company": "АО НТЦ Атлас",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 50000,
+                "salary_max": 80000
+        },
+        {
+                "profession": "Программист Python Junior (BigData)",
+                "url": "https://hh.ru/vacancy/82524858",
+                "city": "Екатеринбург",
+                "company": "BRANDPOL",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 45000,
+                "salary_max": 100000
+        },
+        {
+                "profession": "Junior Python Django (стажер)",
+                "url": "https://hh.ru/vacancy/82082298",
+                "city": "Москва",
+                "company": "Новый стартап, решения для транспорта",
+                "schedule": "Можно работать сменами по 4–6 часов в день",
+                "experience": "Нет опыта",
+                "salary_min": 30000,
+                "salary_max": 30000
+        },
+        {
+                "profession": "Программист Python (Junior)",
+                "url": "https://hh.ru/vacancy/79995246",
+                "city": "Волгоград",
+                "company": "Открытые Бизнес Технологии",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 30000,
+                "salary_max": 30000
+        },
+        {
+                "profession": "Начинающий Веб программист (Junior Web-разработчик)",
+                "url": "https://hh.ru/vacancy/82509167",
+                "city": "Саратов",
+                "company": "РэйнбовСофт, НПО",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 25000,
+                "salary_max": 70000
+        },
+        {
+                "profession": "Junior Data Scientist",
+                "url": "https://hh.ru/vacancy/82534003",
+                "city": "Санкт-Петербург",
+                "company": "Совкомбанк Страхование",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 0,
+                "salary_max": 0
+        },
+        {
+                "profession": "Junior Python Developer (агентство Starlink)",
+                "url": "https://hh.ru/vacancy/82522478",
+                "city": "Москва",
+                "company": "RoRe Group",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 0,
+                "salary_max": 0
+        },
+        {
+                "profession": "Тестировщик (Junior)",
+                "url": "https://hh.ru/vacancy/82238787",
+                "city": "Москва",
+                "company": "айФлекс, компания",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 0,
+                "salary_max": 0
+        },
+        {
+                "profession": "Junior Manual QA Engineer",
+                "url": "https://hh.ru/vacancy/79058266",
+                "city": "Санкт-Петербург",
+                "company": "Saber Interactive",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 0,
+                "salary_max": 0
+        },
+        {
+                "profession": "QA Engineer (Junior)",
+                "url": "https://hh.ru/vacancy/81855673",
+                "city": "Санкт-Петербург",
+                "company": "ЛИИС Инженерные Решения",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 0,
+                "salary_max": 0
+        },
+        {
+                "profession": "Экономист-аналитик (junior/middle data scientist)",
+                "url": "https://hh.ru/vacancy/82624745",
+                "city": "Москва",
+                "company": "Аналитический центр при Правительстве Российской Федерации",
+                "schedule": "-",
+                "experience": "Нет опыта",
+                "salary_min": 0,
+                "salary_max": 0
+        }
+]
